@@ -2,74 +2,231 @@
 
 ## 🌍 Overview
 
-**EcoSangam** is an AI-driven sustainability platform that empowers individuals to track, manage, and offset their carbon footprint. It bridges awareness with action by helping users set eco-goals, contribute to verified offset programs, and stay consistently engaged through gamified features and AI support.
+**EcoSangam** is an AI-driven sustainability platform that empowers individuals to track, manage, and reduce their carbon footprint. It bridges awareness with action by helping users set eco-goals, contribute to verified offset programs, and stay consistently engaged through gamified features and AI support.
 
-Our vision: **Make sustainability accessible, actionable, and impactful for everyone.**
+> **Vision:** Make sustainability accessible, actionable, and impactful for everyone.
 
 ---
 
-## 💡 What EcoSangam Does
+## 🚀 Key Features
 
 - 🌱 **Track & Visualize Carbon Footprint**  
-  Input lifestyle habits and view detailed breakdowns across categories like **transportation**, **home energy**, **food**, etc.
+  Analyze emissions across categories like transportation, home energy, and lifestyle.
 
 - ⚖️ **Offset Emissions**  
-  Easily contribute any amount towards **vetted carbon offset programs** and receive verifiable certificates.
+  Support verified carbon offset programs and receive eco-certificates.
 
-- 🎯 **Set Eco Goals & Earn Streaks**  
-  Gamified goal system to **build sustainable habits** and **reward consistency** with streaks and achievement badges.
+- 🎯 **Eco Goals & Streaks**  
+  Build sustainable habits with a gamified system of goals, streaks, and rewards.
 
 - 🤖 **AI Sustainability Assistant**  
-  Integrated chatbot using **Botpress + Gemini/OpenAI APIs** that gives:
-  - Personalized sustainability tips
-  - Weekly/monthly insights
-  - Smart query responses
+  Powered by Gemini/OpenAI APIs for:
+  - Personalized eco tips
+  - Smart recommendations
+  - Query-based assistance
 
 - 📝 **Environmental Issue Reporting**  
-  Users can raise local environmental issues, which are forwarded to **official government portals** (MoEFCC, CPCB) via our AI agent.
+  Raise issues that can be escalated to official portals (MoEFCC, CPCB).
 
-- 📸 **Community Features**  
-  Share your **eco-stories**, progress, and motivate others in the community feed.
+- 📸 **Community Engagement**  
+  Share eco-stories, progress, and inspire others.
+
+---
+
+## 🧠 Architecture (Simple View)
+
+Client (React)
+↓ (fetch API)
+Backend (Express)
+↓
+Routes → Controllers
+↓
+Models (Mongoose)
+↓
+MongoDB
+
+
+### Flow:
+1. User interacts with frontend  
+2. Frontend sends API requests  
+3. Backend handles logic via controllers  
+4. Data stored/retrieved from MongoDB  
+5. Response sent back to frontend  
 
 ---
 
 ## 💻 Tech Stack
 
-### ⚙️ Backend
-- **Node.js** + **Express.js**
-- **OAuth 2.0** Authentication + **JWT**
-- **Nodemailer** (for communication)
-- **pdf-lib** (for generating eco-certificates)
-- **Langchain**, **Gemini API**, **OpenAI** (for AI assistant)
+### Frontend
+- React (Vite)
+- TypeScript
+- Tailwind CSS
+- Framer Motion
 
-### 🧠 AI Chatbot
-- **Botpress** (custom AI workflows and chat flows)
+### Backend
+- Node.js
+- Express.js
+- JWT Authentication
+- OAuth (Google)
 
-### 🌐 Frontend
-- **React.js**
-- **TailwindCSS** (UI styling)
-- **Framer Motion** (animations)
+### Database
+- MongoDB (Mongoose)
 
-### 📦 Database
-- **MongoDB Atlas**
-
----
-
-## 🚀 Challenges We Faced
-
-- 🌐 **Real-Time Carbon Calculation**  
-  Mapping real-world activities to emissions data required research and normalization of various data sources.
-
-- 🧠 **AI Personalization**  
-  Building a smart and reliable assistant for sustainability queries involved prompt engineering, fallback systems, and tuning multiple APIs.
-
-- 🎨 **Accessible & Inclusive UI**  
-  Ensuring the interface is usable across all demographics, including screen-reader support, light/dark modes, and inclusive language.
-
-- 📤 **Government Integration**  
-  Automating issue escalation to official portals like **MoEFCC** and **CPCB** through APIs and email logic was tricky but impactful.
+### Integrations
+- Gemini API / OpenAI (AI assistant)
+- Nodemailer (emails)
+- pdf-lib (certificates)
+- Botpress (chat workflows)
 
 ---
 
+## 📁 Project Structure
 
-## 📢 Let’s Keep Building Tech That Matters
+ecosangam/
+│
+├── client/ # Frontend (React + Vite)
+├── server/ # Backend (Node + Express)
+│ ├── config/
+│ ├── controllers/
+│ ├── models/
+│ ├── routes/
+│ ├── services/
+│
+└── README.md
+
+
+---
+
+## ⚙️ Run Locally
+
+### 1️⃣ Clone Repository
+
+git clone https://github.com/UMESHRATHOD16/ecoSangam.git
+cd ecoSangam
+
+
+---
+
+### 2️⃣ Install Dependencies
+
+#### Backend
+cd server
+npm install
+
+#### Frontend
+cd ../client
+npm install
+
+
+---
+
+### 3️⃣ Setup MongoDB
+
+#### Option A — Local MongoDB
+brew services start mongodb-community
+mongosh
+
+
+#### Option B — MongoDB Atlas (recommended)
+- Create cluster
+- Copy connection string
+- Add to `.env`
+
+---
+
+### 4️⃣ Create `.env` file (IMPORTANT)
+Create inside `server/`
+
+server/.env
+
+#### Sample `.env`
+PORT=5000
+
+MongoDB
+
+MONGO_URI=mongodb://127.0.0.1:27017/ecosangam
+
+Auth
+
+JWT_SECRET=your_secret_key
+
+Google OAuth (optional)
+
+GOOGLE_CLIENT_ID=your_client_id
+GOOGLE_CLIENT_SECRET=your_secret
+
+Email (optional)
+
+EMAIL_USER=your_email@gmail.com
+
+EMAIL_PASS=your_app_password
+
+
+---
+
+### 5️⃣ Run Backend
+cd server
+node server.js
+
+Expected output:
+
+MongoDB Connected
+Server running on port 5000
+
+
+---
+
+### 6️⃣ Run Frontend
+cd client
+npm run dev
+
+Open:
+
+http://localhost:5173
+
+
+---
+
+## 🔗 Frontend ↔ Backend Connection
+
+Ensure API calls point to:
+http://localhost:5000
+
+
+Example:
+```js
+fetch("http://localhost:5000/api/...")
+
+⚠️ Common Issues
+
+MongoDB not connecting
+Check MONGO_URI
+Ensure MongoDB is running
+
+CORS error
+
+app.use(cors());
+.env not loading
+import dotenv from "dotenv";
+dotenv.config();
+
+Port already in use
+lsof -i :5000
+kill -9 <PID>
+
+🚧 Challenges Faced
+🌐 Real-time carbon calculation from diverse data sources
+🧠 AI personalization and response accuracy
+🎨 Building accessible and inclusive UI
+📤 Integrating with government reporting systems
+
+🧠 What This Project Demonstrates
+Full-stack architecture understanding
+API design and integration
+AI + real-world problem solving
+Database design with MongoDB
+Authentication and user management
+
+
+📢 Final Note
+This project is not just about tracking carbon—it’s about changing behavior through technology.
